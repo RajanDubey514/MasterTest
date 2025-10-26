@@ -1,0 +1,75 @@
+.tableContainer {
+  width: 100%;
+  border-collapse: collapse;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 20px 0;
+}
+
+.tableContainer th,
+.tableContainer td {
+  border: 1px solid #ddd;
+  padding: 8px 8px;
+  text-align: center;
+}
+
+.tableContainer th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+  font-size: 1em;
+}
+
+.tableContainer td {
+  font-size: 0.8em;
+}
+
+.tableContainer tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.tableContainer tr:hover {
+  background-color: #f1f1f1;
+}
+
+.tableContainer th {
+  cursor: pointer;
+  padding: 6px 12px;
+  border: none;
+  background-color:#757de8;
+  color: white;
+  border-radius: 4px;
+}
+
+.tablebutton1 {
+  cursor: pointer;
+  padding: 3px 3px;
+  border: none;
+  background-color: #002984;
+  color: white;
+  border-radius: 4px;
+}
+
+.tablebutton1:hover {
+  background-color: #002984;
+}
+
+.tablebutton2 {
+  cursor: pointer;
+  padding: 3px 3px;
+  border: none;
+  background-color: #e62d2d;
+  color: white;
+  border-radius: 4px;
+  margin-left: 5px;
+}
+
+.tablebutton2:hover {
+  background-color: #980c0c;
+}
+
+.tableInnerHead {
+  background-color: #67a97b;
+  padding: 10px;
+  color: white;
+  font-size: 1em;
+  font-weight: 600;
+}

@@ -1,0 +1,55 @@
+.formPaper {
+  max-width: 900px;
+  margin: 0 auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  height: 55vh; /* ✅ Limit height */
+  overflow: hidden;
+}
+
+.formHeader {
+  position: sticky;
+  top: 0;
+  background-color: #67a97b;
+  color: white;
+  padding: 12px 16px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 1.1rem;
+  z-index: 10;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.formBody {
+  flex: 1;
+  overflow-y: auto; /* ✅ Enables scroll */
+  padding: 16px;
+  background-color: #fafafa;
+}   
+
+.scroll-container {
+  max-height: 300px;       /* desired height */
+  overflow: auto;
+}
+
+/* Webkit browsers (Chrome, Edge, Safari) */
+.scroll-container::-webkit-scrollbar {
+  width: 4px;       /* thin vertical scrollbar */
+  height: 4px;      /* thin horizontal scrollbar */
+}
+
+.scroll-container::-webkit-scrollbar-thumb {
+  background-color: #b0b0b0;
+  border-radius: 4px;
+}
+
+.scroll-container::-webkit-scrollbar-thumb:hover {
+  background-color: #665f5fff;
+}
+
+.scroll-container::-webkit-scrollbar-track {
+  background: transparent;  /* optional: track background */
+}
