@@ -53,7 +53,6 @@ const AddDataForm = ({ dataList, setDataList }) => {
       logo: null,
       type: "",
     },
-    validationSchema,
    validationSchema,
     onSubmit: (values, { resetForm }) => {
       const formData = {

@@ -18,7 +18,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import ModalCom from "../component/ModalCom";
 import AddDataForm from "./addData/AddDataForm";
 import SingleData from "./singleData/SingleData";
-import "./Home.css"; // ✅ Import external CSS
+import "./home.css"; 
 import { Delete } from "@mui/icons-material";
 import FakeData from "../component/FakeData";
 import Swal from "sweetalert2";
