@@ -16,7 +16,7 @@ import EmailIcon from "@mui/icons-material/Email";
 import LockIcon from "@mui/icons-material/Lock";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { alertSuccess } from "../../component/Alert";
+import { alertSuccess } from "../../component/alert/Alert";
 
 const validationSchema = Yup.object({
   email: Yup.string()

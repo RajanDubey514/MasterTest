@@ -47,7 +47,7 @@ const ModalCom = ({ isOpen, onClose, title, content }) => {
             mb: 1,
           }}
         >
-          <Typography id="modal-title" variant="h6" component="h2">
+          <Typography id="modal-title" variant="" component="p" sx={{fontSize : "17px" }}>
             {title || ""}
           </Typography>
           <IconButton onClick={onClose} size="small" sx={{color : "red"}}>

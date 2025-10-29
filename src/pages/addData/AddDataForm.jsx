@@ -13,7 +13,7 @@ import {
   Button,
   Typography,
 } from "@mui/material";
-import { alertSuccess } from "../../component/Alert";
+import { alertSuccess } from "../../component/alert/Alert";
 
 // ✅ Validation Schema
 const validationSchema = Yup.object({

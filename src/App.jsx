@@ -4,8 +4,9 @@ import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import AddDataForm from "./pages/addData/AddDataForm";
-import PersistentDrawerLeft from "./component/PersistentDrawerLeft";
+import PersistentDrawerLeft from "./component/navbar/PersistentDrawerLeft";
 import Login from "./pages/loginPage/Login";
+import Footer from "./component/footer/Footer";
 
 // PrivateRoute component
 const PrivateRoute = ({ children }) => {
