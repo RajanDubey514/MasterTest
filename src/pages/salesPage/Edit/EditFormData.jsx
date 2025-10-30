@@ -13,7 +13,7 @@ import {
   Button,
   Typography,
 } from "@mui/material";
-import { alertSuccess } from "../../component/alert/Alert";
+import { alertSuccess } from "../../../component/alert/Alert";
 
 const validationSchema = Yup.object({
   accountName: Yup.string().required("Account Name is required"),

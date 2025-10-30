@@ -86,4 +86,13 @@ const FakeData = [
   },
 ];
 
+
+export const salesData = [
+  { name: "Electronics", value: 400 },
+  { name: "Fashion", value: 300 },
+  { name: "Groceries", value: 300 },
+  { name: "Furniture", value: 200 },
+  { name: "Toys", value: 150 },
+];
+
 export default FakeData;

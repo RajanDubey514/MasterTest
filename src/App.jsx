@@ -1,12 +1,13 @@
 // App.jsx
 import React, { useState, useEffect } from "react";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
-import Home from "./pages/Home";
+import Home from "./pages/dashboard/Home";
 import About from "./pages/About";
-import AddDataForm from "./pages/addData/AddDataForm";
+import AddDataForm from "./pages/salesPage/AddDataForm";
 import PersistentDrawerLeft from "./component/navbar/PersistentDrawerLeft";
 import Login from "./pages/loginPage/Login";
 import Footer from "./component/footer/Footer";
+import Dashboard from "./pages/dashboard/Dashboard";
 
 // PrivateRoute component
 const PrivateRoute = ({ children }) => {
@@ -49,7 +50,7 @@ const App = () => {
         element={
           <PrivateRoute>
             <PersistentDrawerLeft>
-              <Home />
+              <Dashboard />
             </PersistentDrawerLeft>
           </PrivateRoute>
         }
@@ -64,8 +65,8 @@ const App = () => {
           </PrivateRoute>
         }
       />
-      {/* <Route
-        path="/add"
+      <Route
+        path="/sale-add"
         element={
           <PrivateRoute>
             <PersistentDrawerLeft>
@@ -73,7 +74,7 @@ const App = () => {
             </PersistentDrawerLeft>
           </PrivateRoute>
         }
-      /> */}
+      />
 
       {/* Catch-all */}
       <Route path="*" element={<Navigate to="/" replace />} />

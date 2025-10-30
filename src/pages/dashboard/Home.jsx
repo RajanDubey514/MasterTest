@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Box, Grid, Typography, Button, Paper } from "@mui/material";
 import Swal from "sweetalert2";
-import ModalCom from "../component/modalComp/ModalCom";
-import AddDataForm from "./addData/AddDataForm";
-import EditFormData from "./Edit/EditFormData";
-import SingleData from "./singleData/SingleData";
-import FakeData from "../component/FakeData";
-import EditableTable from "../component/tablecomp/EditableTable";
-import Pagination from "../component/pagination/Pagination";
+import ModalCom from "../../component/modalComp/ModalCom";
+// import AddDataForm from "../addData/AddDataForm";
+import EditFormData from "../salesPage/Edit/EditFormData";
+import FakeData from "../../component/FakeData";
+import EditableTable from "../../component/tablecomp/EditableTable";
+import Pagination from "../../component/pagination/Pagination";
 
 const Home = () => {
   const [dataList, setDataList] = useState([]);
@@ -114,7 +113,7 @@ const Home = () => {
         <Typography variant="h6" fontWeight="bold">
           Account Master
         </Typography>
-        <Button
+        {/* <Button
           variant="contained"
           size="small"
           sx={{
@@ -125,7 +124,7 @@ const Home = () => {
           onClick={openAddModal}
         >
           Add Data
-        </Button>
+        </Button> */}
       </Grid>
 
      <Grid style={{ width: "100%", overflowX: "auto" }}>
@@ -163,12 +162,12 @@ const Home = () => {
       />
 
       {/* Add Modal */}
-      <ModalCom
+      {/* <ModalCom
         isOpen={isAddModalOpen}
         onClose={closeAddModal}
         title="Add Data"
         content={<AddDataForm dataList={dataList} setDataList={setDataList} />}
-      />
+      /> */}
 
       {/* Edit Modal */}
       <ModalCom
@@ -185,13 +184,6 @@ const Home = () => {
         }
       />
 
-      {/* View Modal */}
-      <ModalCom
-        isOpen={isViewModalOpen}
-        onClose={closeViewModal}
-        title="Account Details"
-        content={<SingleData data={selectedData} />}
-      />
     </Box>
   );
 };
