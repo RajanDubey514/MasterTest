@@ -38,6 +38,7 @@ const ResponsiveDrawer = ({
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
               width: drawerWidth,
+              backgroundColor: "#a8d5f2", // 🌈 Light blue background
             },
           }}
         >
@@ -87,6 +88,7 @@ const ResponsiveDrawer = ({
             "& .MuiDrawer-paper": {
               width: open ? drawerWidth : `calc(${theme.spacing(7)} + 1px)`,
               boxSizing: "border-box",
+              backgroundColor: "#eff5f8ff", //
               transition: theme.transitions.create("width", {
                 easing: theme.transitions.easing.sharp,
                 duration: theme.transitions.duration.enteringScreen,
