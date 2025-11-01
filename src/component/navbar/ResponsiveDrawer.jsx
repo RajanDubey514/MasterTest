@@ -10,7 +10,6 @@ import {
   Tooltip,
   useMediaQuery,
   Toolbar,
-  Typography,
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { Link, useLocation } from "react-router-dom";
@@ -123,7 +122,7 @@ const ResponsiveDrawer = ({
                     to={path}
                     selected={location.pathname === path}
                     sx={{
-                      minHeight: 40,
+                      minHeight: 44,
                       justifyContent: open ? "initial" : "center",
                       px: 2.5,
                       "&.Mui-selected": {
@@ -134,25 +133,31 @@ const ResponsiveDrawer = ({
                       },
                     }}
                   >
-                    <ListItemIcon
-                      sx={{
-                         minWidth: 0,
-                        mr: open ? 3 : "auto",
-                        justifyContent: "center",
-                      }}
-                    >
-                      {icon}
-                    </ListItemIcon>
-                    {/* <ListItemText
-                      primary={text}
-                      sx={{
-                        opacity: open ? 1 : 0,
-                        fontSize: "0.5rem",
-                      }}
-                    /> */}
-                    <Typography variant="p" sx={{fontSize : "14px"}}>
-                      {text}
-                    </Typography>
+                   <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      mr: open ? 2 : "auto", // reduced spacing
+                      justifyContent: "center",
+                      "& svg": {
+                        fontSize: "1.5rem", // smaller icon
+                        color: "#0b0c0cff", // subtle blue tint (optional)
+                      },
+                    }}
+                  >
+                    {icon}
+                  </ListItemIcon>
+
+                  <ListItemText
+                    primary={text}
+                    sx={{
+                      opacity: open ? 1 : 0,
+                      "& .MuiListItemText-primary": {
+                        fontSize: "0.8rem", // smaller font
+                        fontWeight: 500,
+                        color: "#333",
+                      },
+                    }}
+                  />
                   </ListItemButton>
                 </Tooltip>
               </ListItem>

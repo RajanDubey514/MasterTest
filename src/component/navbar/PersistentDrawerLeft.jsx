@@ -73,7 +73,7 @@ export default function PersistentMiniDrawer({ children }) {
 
   const pageTitles = {
     "/": "Dashboard",
-    "/sale-add": "Add Customer",
+    "/sale-add": "Add Products",
     "/about": "About",
   };
   const currentTitle = pageTitles[location.pathname] || "Dashboard";
@@ -102,129 +102,146 @@ export default function PersistentMiniDrawer({ children }) {
         }}
       >
         {/* AppBar */}
-        <AppBar position="fixed" open={!isMobile && open}>
-          <Toolbar
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              px: isMobile ? 1 : 2,
-            }}
-          >
-            {/* Left: Menu + Title */}
-            <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-              <IconButton
-                color="inherit"
-                onClick={() => setOpen(!open)}
-                edge="start"
-              >
-                <MenuIcon />
-              </IconButton>
-              <Typography
-                sx={{
-                  fontSize: isMobile ? "14px" : "16px",
-                  fontWeight: 500,
-                  whiteSpace: "nowrap",
-                }}
-              >
-                {currentTitle}
-              </Typography>
-            </Box>
+      <AppBar
+  position="fixed"
+  open={!isMobile && open}
+  sx={{
+    bgcolor: "primary.main", // ✅ keep your theme’s primary color
+    color: "#fff",
+    boxShadow: "none", // optional cleaner look
+  }}
+>
+  <Toolbar
+    sx={{
+      display: "flex",
+      justifyContent: "space-between",
+      px: isMobile ? 1 : 2,
+      minHeight: isMobile ? 48 : 56, // reduced height
+    }}
+  >
+    {/* Left: Menu + Title */}
+    <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+      <IconButton
+        color="inherit"
+        onClick={() => setOpen(!open)}
+        edge="start"
+        sx={{ p: 0.8 }}
+      >
+        <MenuIcon sx={{ fontSize: "20px" }} />
+      </IconButton>
 
-            {/* Right: Icons */}
-            <Grid
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                gap: isMobile ? 1 : 2,
-                position: "relative",
-              }}
-            >
-              {/* Home Select */}
-              <Tooltip title="Home Options">
-                <IconButton
-                  color="inherit"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setShowHomeSelect(!showHomeSelect);
-                    setShowPersonSelect(false);
-                  }}
-                >
-                  <HomeIcon sx={{ fontSize: "20px" }} />
-                </IconButton>
-              </Tooltip>
+      <Typography
+        sx={{
+          fontSize: isMobile ? "13px" : "15px",
+          fontWeight: 500,
+          whiteSpace: "nowrap",
+          color: "inherit",
+        }}
+      >
+        {currentTitle}
+      </Typography>
+    </Box>
 
-              {showHomeSelect && (
-                <Box
-                  component="select"
-                  value={homeOption}
-                  onChange={(e) => setHomeOption(e.target.value)}
-                  sx={{
-                    width: isMobile ? 120 : 150,
-                    height: 30,
-                    borderRadius: 1,
-                    border: "1px solid #ccc",
-                    backgroundColor: "#fff",
-                    fontSize: "13px",
-                    padding: "4px 8px",
-                    position: isMobile ? "absolute" : "static",
-                    top: isMobile ? 50 : "auto",
-                    right: isMobile ? 0 : "auto",
-                    zIndex: 1300,
-                  }}
-                >
-                  <option value="">Select</option>
-                  <option value="profile">Profile</option>
-                  <option value="settings">Settings</option>
-                  <option value="logout">Logout</option>
-                </Box>
-              )}
+    {/* Right: Icons */}
+    <Grid
+      sx={{
+        display: "flex",
+        alignItems: "center",
+        gap: isMobile ? 1 : 1.5,
+        position: "relative",
+      }}
+    >
+      {/* Home Select */}
+      <Tooltip title="Home Options">
+        <IconButton
+          color="inherit"
+          onClick={(e) => {
+            e.stopPropagation();
+            setShowHomeSelect(!showHomeSelect);
+            setShowPersonSelect(false);
+          }}
+          sx={{ p: 0.8 }}
+        >
+          <HomeIcon sx={{ fontSize: "20px" }} />
+        </IconButton>
+      </Tooltip>
 
-              {/* Person Select */}
-              <Tooltip title="User Options">
-                <IconButton
-                  color="inherit"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setShowPersonSelect(!showPersonSelect);
-                    setShowHomeSelect(false);
-                  }}
-                >
-                  <PersonIcon sx={{ fontSize: "20px" }} />
-                </IconButton>
-              </Tooltip>
+      {showHomeSelect && (
+        <Box
+          component="select"
+          value={homeOption}
+          onChange={(e) => setHomeOption(e.target.value)}
+          sx={{
+            width: isMobile ? 110 : 140,
+            height: 28,
+            borderRadius: 1,
+            border: "1px solid #ccc",
+            backgroundColor: "#fff",
+            fontSize: "12.5px",
+            padding: "3px 6px",
+            position: isMobile ? "absolute" : "static",
+            top: isMobile ? 45 : "auto",
+            right: isMobile ? 0 : "auto",
+            zIndex: 1300,
+            color: "#000",
+          }}
+        >
+          <option value="">Select</option>
+          <option value="profile">Profile</option>
+          <option value="settings">Settings</option>
+          <option value="logout">Logout</option>
+        </Box>
+      )}
 
-              {showPersonSelect && (
-                <Box
-                  component="select"
-                  value={personOption}
-                  onChange={(e) => setPersonOption(e.target.value)}
-                  sx={{
-                    width: isMobile ? 120 : 150,
-                    height: 30,
-                    borderRadius: 1,
-                    border: "1px solid #ccc",
-                    backgroundColor: "#fff",
-                    fontSize: "13px",
-                    padding: "4px 8px",
-                    position: isMobile ? "absolute" : "static",
-                    top: isMobile ? 50 : "auto",
-                    right: isMobile ? 0 : "auto",
-                    zIndex: 1300,
-                  }}
-                >
-                  <option value="">Select</option>
-                  <option value="profile">Profile</option>
-                  <option value="settings">Settings</option>
-                  <option value="logout">Logout</option>
-                </Box>
-              )}
+      {/* Person Select */}
+      <Tooltip title="User Options">
+        <IconButton
+          color="inherit"
+          onClick={(e) => {
+            e.stopPropagation();
+            setShowPersonSelect(!showPersonSelect);
+            setShowHomeSelect(false);
+          }}
+          sx={{ p: 0.8 }}
+        >
+          <PersonIcon sx={{ fontSize: "20px" }} />
+        </IconButton>
+      </Tooltip>
 
-              {/* Notifications + Profile */}
-              <Notificationmenu />
-              <ProfileMenu onLogout={handleLogout} />
-            </Grid>
-          </Toolbar>
-        </AppBar>
+      {showPersonSelect && (
+        <Box
+          component="select"
+          value={personOption}
+          onChange={(e) => setPersonOption(e.target.value)}
+          sx={{
+            width: isMobile ? 110 : 140,
+            height: 28,
+            borderRadius: 1,
+            border: "1px solid #ccc",
+            backgroundColor: "#fff",
+            fontSize: "12.5px",
+            padding: "3px 6px",
+            position: isMobile ? "absolute" : "static",
+            top: isMobile ? 45 : "auto",
+            right: isMobile ? 0 : "auto",
+            zIndex: 1300,
+            color: "#000",
+          }}
+        >
+          <option value="">Select</option>
+          <option value="profile">Profile</option>
+          <option value="settings">Settings</option>
+          <option value="logout">Logout</option>
+        </Box>
+      )}
+
+      {/* Notifications + Profile */}
+      <Notificationmenu />
+      <ProfileMenu onLogout={handleLogout} />
+    </Grid>
+  </Toolbar>
+</AppBar>
+
 
         <DrawerHeader />
 
