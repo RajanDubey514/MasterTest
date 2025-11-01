@@ -7,7 +7,7 @@ import {
   Typography,
   IconButton,
   useMediaQuery,
-  Tooltip,
+  Tooltip,ThemeProvider 
 } from "@mui/material";
 import { styled, useTheme } from "@mui/material/styles";
 import MuiAppBar from "@mui/material/AppBar";
@@ -20,8 +20,27 @@ import ProfileMenu from "../ProfileMenu/ProfileMenu";
 import { useLocation } from "react-router-dom";
 import menuItems from "./menuItems";
 import ResponsiveDrawer from "./ResponsiveDrawer";
+import { createTheme } from "@mui/material/styles";
 
 const drawerWidth = 200;
+
+const themedd = createTheme({
+  components: {
+    MuiToolbar: {
+      styleOverrides: {
+        root: {
+          minHeight: 48, // default is 64px on desktop, 56px on mobile
+          maxHeight: 48, // default is 64px on desktop, 56px on mobile
+          "@media (min-width:600px)": {
+            minHeight: 48,
+            maxHeight: 48,
+
+          },
+        },
+      },
+    },
+  },
+});
 
 const DrawerHeader = styled("div")(({ theme }) => ({
   ...theme.mixins.toolbar,
@@ -102,6 +121,7 @@ export default function PersistentMiniDrawer({ children }) {
         }}
       >
         {/* AppBar */}
+        <ThemeProvider theme={themedd}>
       <AppBar
   position="fixed"
   open={!isMobile && open}
@@ -116,7 +136,7 @@ export default function PersistentMiniDrawer({ children }) {
       display: "flex",
       justifyContent: "space-between",
       px: isMobile ? 1 : 2,
-      minHeight: isMobile ? 48 : 56, // reduced height
+      // minHeight: isMobile ? 48 : 56, 
     }}
   >
     {/* Left: Menu + Title */}
@@ -241,6 +261,7 @@ export default function PersistentMiniDrawer({ children }) {
     </Grid>
   </Toolbar>
 </AppBar>
+        </ThemeProvider>
 
 
         <DrawerHeader />

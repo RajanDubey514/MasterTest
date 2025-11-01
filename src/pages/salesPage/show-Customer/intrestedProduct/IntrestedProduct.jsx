@@ -1,61 +1,108 @@
 import React, { useEffect, useState } from "react";
-import { Box, Grid, Typography, Button, Paper } from "@mui/material";
+import { Box, Grid, Button, Paper } from "@mui/material";
 import Swal from "sweetalert2";
+
+// ✅ Custom Components
 import ModalCom from "../../../../component/modalComp/ModalCom";
-import EditFormData from "../../../salesPage/edit-Customer/EditFormData";
 import AddIntrestedProduct from "../../add-Customer/AddIntrestedProduct/AddIntrestedProduct";
-import {FakeInterestedProductData} from "../../../../component/FakeData";
+import EditIntrestedProduct from "../../edit-Customer/editIntrestedProduct/EditIntrestedProduct";
 import EditableTable from "../../../../component/tablecomp/EditableTable";
 import Pagination from "../../../../component/pagination/Pagination";
-import EditIntrestedProduct from "../../edit-Customer/editIntrestedProduct/EditIntrestedProduct";
+import SearchBar from "../../../../component/searchComp/SearchBar";
+import { FakeInterestedProductData } from "../../../../component/FakeData";
 
+
+// ============================================================================
+// 🧾 IntrestedProduct Component — Manages CRUD, Search, Sort, Pagination
+// ============================================================================
 const IntrestedProduct = () => {
-  const [dataList, setDataList] = useState([]);
-  const [selectedData, setSelectedData] = useState(null);
 
+  // --------------------------------------------------------------------------
+  // 🔹 State Management
+  // --------------------------------------------------------------------------
+  const [dataList, setDataList] = useState([]);             // Full product data
+  const [filteredData, setFilteredData] = useState([]);     // Filtered data after search
+  const [searchQuery, setSearchQuery] = useState("");       // Search input state
+  const [selectedData, setSelectedData] = useState(null);   // Data selected for editing
+
+  // 🔸 Modal States
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [isViewModalOpen, setIsViewModalOpen] = useState(false);
 
-  // Edit tracking (for inline editing — optional)
+  // 🔸 Inline Edit (not used here, handled via modal)
   const [editRowId, setEditRowId] = useState(null);
   const [editedData, setEditedData] = useState({});
-  const editableFields = []; // Not using inline edit now, handled via modal
+  const editableFields = [];
 
-  // Sorting
+  // 🔸 Sorting Config
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
 
+  // 🔸 Pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const rowsPerPage = 5;
+
+
+  // --------------------------------------------------------------------------
+  // 📦 Load Initial Fake Data (simulate API)
+  // --------------------------------------------------------------------------
+  useEffect(() => {
+    setDataList(FakeInterestedProductData);
+    setFilteredData(FakeInterestedProductData);
+  }, []);
+
+
+  // --------------------------------------------------------------------------
+  // 🔍 Search Filter Logic
+  // --------------------------------------------------------------------------
+  useEffect(() => {
+    const lowerSearch = searchQuery.toLowerCase();
+    const filtered = dataList.filter((item) =>
+      Object.values(item).some(
+        (val) => val && val.toString().toLowerCase().includes(lowerSearch)
+      )
+    );
+    setFilteredData(filtered);
+    setCurrentPage(1); // reset to first page on search
+  }, [searchQuery, dataList]);
+
+
+  // --------------------------------------------------------------------------
+  // ↕️ Sorting Logic (ascending / descending)
+  // --------------------------------------------------------------------------
   const onSort = (key) => {
     let direction = "asc";
+
+    // Toggle direction if same key is sorted again
     if (sortConfig.key === key && sortConfig.direction === "asc") {
       direction = "desc";
     }
+
     setSortConfig({ key, direction });
 
-    const sortedData = [...dataList].sort((a, b) => {
+    // Sort the filtered data
+    const sortedData = [...filteredData].sort((a, b) => {
       if (a[key] < b[key]) return direction === "asc" ? -1 : 1;
       if (a[key] > b[key]) return direction === "asc" ? 1 : -1;
       return 0;
     });
 
-    setDataList(sortedData);
+    setFilteredData(sortedData);
   };
 
-  // Pagination
-  const [currentPage, setCurrentPage] = useState(1);
-  const rowsPerPage = 5;
 
-  useEffect(() => {
-    setDataList(FakeInterestedProductData);
-  }, []);
-
-  const totalPages = Math.ceil(dataList.length / rowsPerPage);
-  const paginatedData = dataList.slice(
+  // --------------------------------------------------------------------------
+  // 📄 Pagination Logic
+  // --------------------------------------------------------------------------
+  const totalPages = Math.ceil(filteredData.length / rowsPerPage);
+  const paginatedData = filteredData.slice(
     (currentPage - 1) * rowsPerPage,
     currentPage * rowsPerPage
   );
 
-  // Modal handlers
+
+  // --------------------------------------------------------------------------
+  // 🧩 Modal Handlers
+  // --------------------------------------------------------------------------
   const openAddModal = () => setIsAddModalOpen(true);
   const closeAddModal = () => setIsAddModalOpen(false);
 
@@ -64,22 +111,16 @@ const IntrestedProduct = () => {
     setSelectedData(row);
     setIsEditModalOpen(true);
   };
+
   const closeEditModal = () => {
     setSelectedData(null);
     setIsEditModalOpen(false);
   };
 
-  const openViewModal = (id) => {
-    const row = dataList.find((item) => item.id === id);
-    setSelectedData(row);
-    setIsViewModalOpen(true);
-  };
-  // const closeViewModal = () => {
-  //   setSelectedData(null);
-  //   setIsViewModalOpen(false);
-  // };
 
-  // Delete
+  // --------------------------------------------------------------------------
+  // 🗑️ Delete Record Handler
+  // --------------------------------------------------------------------------
   const handleDelete = (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -91,33 +132,48 @@ const IntrestedProduct = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        setDataList((prev) => prev.filter((item) => item.id !== id));
-        Swal.fire("Deleted!", "Your data has been deleted.", "success");
+        const updatedList = dataList.filter((item) => item.id !== id);
+        setDataList(updatedList);
+        setFilteredData(updatedList);
+        Swal.fire("Deleted!", "Product has been deleted.", "success");
       }
     });
   };
 
-  // Table header keys
-  const headers = dataList.length > 0 ? Object.keys(dataList[0]) : [];
 
-  // Table handlers
-  const handleEdit = (id) => openEditModal(id);
-  const handleSave = () => {};
-  const handleCancel = () => {};
-  const handleChange = () => {};
-  // const handleLog = (id) => openViewModal(id);
+  // --------------------------------------------------------------------------
+  // 🧾 Table Headers
+  // --------------------------------------------------------------------------
+  const headers = filteredData.length > 0 ? Object.keys(filteredData[0]) : [];
 
+
+  // ==========================================================================
+  // 🖼️ JSX Rendering
+  // ==========================================================================
   return (
     <Box p={2}>
-      {/* Header */}
+
+      {/* ==============================================================
+          🔍 Search Bar Section
+      ============================================================== */}
+      <SearchBar
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+        placeholder="Search product by name, type, or category..."
+      />
+
+
+      {/* ==============================================================
+          🧭 Header Section (Add Button)
+      ============================================================== */}
       <Grid container justifyContent="end" alignItems="center" mb={2}>
         <Button
           variant="contained"
           size="small"
           sx={{
             textTransform: "capitalize",
-            backgroundColor: "#primary.main",
-            "&:hover": { backgroundColor: "primary.main" },
+            backgroundColor: "#1976d2",
+            "&:hover": { backgroundColor: "#125ea2" },
           }}
           onClick={openAddModal}
         >
@@ -125,7 +181,11 @@ const IntrestedProduct = () => {
         </Button>
       </Grid>
 
-     <Grid style={{ width: "100%", overflowX: "auto" }}>
+
+      {/* ==============================================================
+          📋 Table Section
+      ============================================================== */}
+      <Grid sx={{ width: "100%", overflowX: "auto" }}>
         <Paper
           sx={{
             mb: 2,
@@ -138,40 +198,51 @@ const IntrestedProduct = () => {
           <EditableTable
             headers={headers}
             rows={paginatedData}
-            editRowId={editRowId}
-            editedData={editedData}
-            handleEdit={handleEdit}
-            handleSave={handleSave}
-            handleCancel={handleCancel}
-            handleChange={handleChange}
-            editableFields={editableFields}
+            handleEdit={openEditModal}
             handleDelete={handleDelete}
             sortConfig={sortConfig}
             onSort={onSort}
+            editRowId={editRowId}
+            editedData={editedData}
+            editableFields={editableFields}
           />
         </Paper>
       </Grid>
 
-      {/* Pagination */}
+
+      {/* ==============================================================
+          📄 Pagination Section
+      ============================================================== */}
       <Pagination
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
         totalPages={totalPages}
       />
 
-      {/* Add Modal */}
+
+      {/* ==============================================================
+          ➕ Add Modal Section
+      ============================================================== */}
       <ModalCom
         isOpen={isAddModalOpen}
         onClose={closeAddModal}
         title="Add Interested Product"
-        content={< AddIntrestedProduct dataList={dataList} setDataList={setDataList} />}
+        content={
+          <AddIntrestedProduct
+            dataList={dataList}
+            setDataList={setDataList}
+          />
+        }
       />
 
-      {/* Edit Modal */}
+
+      {/* ==============================================================
+          ✏️ Edit Modal Section
+      ============================================================== */}
       <ModalCom
         isOpen={isEditModalOpen}
         onClose={closeEditModal}
-        title="Edit Data"
+        title="Edit Interested Product"
         content={
           <EditIntrestedProduct
             selectedData={selectedData}
