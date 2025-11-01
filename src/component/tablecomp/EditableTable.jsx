@@ -78,16 +78,15 @@ const EditableTable = ({
           size="small"
           sx={{
             "& .MuiTableCell-root": {
-              padding: "4px 6px", // 🔹 reduces padding for all cells
-              fontSize: "0.75rem", // 🔹 smaller text
+              padding: "4px 6px",
+              fontSize: "0.75rem",
               lineHeight: 1.2,
             },
             "& .MuiTableCell-head": {
-              padding: "6px 8px", // slightly more for header
+              padding: "6px 8px",
               fontWeight: 600,
               fontSize: "0.75rem",
-              backgroundColor: "#1976d2",
-              color: "white",
+              textTransform: "uppercase",
             },
           }}
         >
@@ -95,7 +94,10 @@ const EditableTable = ({
           <TableHead>
             <TableRow>
               {headers.map((header, index) => {
-                const isId = header.toLowerCase() === "id";
+                const lowerHeader = header.toLowerCase();
+                const isId = lowerHeader === "id";
+                const isAction = lowerHeader === "action";
+
                 return (
                   <TableCell
                     key={index}
@@ -103,11 +105,16 @@ const EditableTable = ({
                     sx={{
                       position: isId ? "sticky" : "static",
                       left: isId ? 0 : "auto",
-                      zIndex: isId ? 20 : 10,
+                      right: isAction ? 0 : "auto",
+                      zIndex: isId || isAction ? 20 : 10,
                       cursor: "pointer",
                       whiteSpace: "nowrap",
-                      minWidth: isId ? 60 : 150,
+                      minWidth: isId || isAction ? 80 : 150,
                       borderRight: "1px solid rgba(224,224,224,0.6)",
+                      backgroundColor:
+                        isId || isAction ? "#1b7bdbff" : "#7aadf4ff",
+                      color: "white",
+                      fontWeight: 600,
                     }}
                   >
                     <div
@@ -117,14 +124,14 @@ const EditableTable = ({
                         justifyContent: "space-between",
                       }}
                     >
-                      {header}
+                      {header.toUpperCase()}
                       {getSortIcon(header)}
                     </div>
                   </TableCell>
                 );
               })}
 
-              {!hideAction && (
+              {!hideAction && !headers.some((h) => h.toLowerCase() === "action") && (
                 <TableCell
                   align="center"
                   sx={{
@@ -133,7 +140,10 @@ const EditableTable = ({
                     zIndex: 20,
                     minWidth: 80,
                     whiteSpace: "nowrap",
-                    background : "red"
+                    backgroundColor: "#1976d2",
+                    color: "white",
+                    fontWeight: 600,
+                    textTransform: "uppercase",
                   }}
                 >
                   Action
@@ -153,14 +163,15 @@ const EditableTable = ({
                 }}
               >
                 {headers.map((header) => {
-                  const isId = header.toLowerCase() === "id";
+                  const lowerHeader = header.toLowerCase();
+                  const isId = lowerHeader === "id";
                   return (
                     <TableCell
                       key={header}
                       sx={{
                         position: isId ? "sticky" : "static",
                         left: isId ? 0 : "auto",
-                        backgroundColor: isId ? "#f9fafb" : "white",
+                        backgroundColor: isId ? "#f3f6fb" : "white",
                         zIndex: isId ? 10 : "auto",
                         whiteSpace: "nowrap",
                         minWidth: isId ? 60 : 150,

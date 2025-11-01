@@ -73,7 +73,7 @@ export default function PersistentMiniDrawer({ children }) {
 
   const pageTitles = {
     "/": "Dashboard",
-    "/sale-add": "Add",
+    "/sale-add": "Add Customer",
     "/about": "About",
   };
   const currentTitle = pageTitles[location.pathname] || "Dashboard";
@@ -229,7 +229,7 @@ export default function PersistentMiniDrawer({ children }) {
         <DrawerHeader />
 
         {/* Scrollable content */}
-        <Box sx={{ flexGrow: 1, overflowY: "auto", p: 2, mb: "60px" }}>
+        <Box sx={{ flexGrow: 1, overflowY: "auto", p: 1, mb: "60px" }}>
           {children}
         </Box>
 

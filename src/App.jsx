@@ -8,7 +8,7 @@ import PersistentDrawerLeft from "./component/navbar/PersistentDrawerLeft";
 import Login from "./pages/loginPage/Login";
 import Footer from "./component/footer/Footer";
 import Dashboard from "./pages/dashboard/Dashboard";
-import CustomerUrl from "./pages/salesPage/add-Customer/CustomerUrl";
+import CustomerUrl from "./pages/salesPage/CustomerUrl";
 
 // PrivateRoute component
 const PrivateRoute = ({ children }) => {

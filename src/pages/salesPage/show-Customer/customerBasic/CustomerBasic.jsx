@@ -1,28 +1,53 @@
 import React, { useEffect, useState } from "react";
-import { Box, Grid, Typography, Button, Paper } from "@mui/material";
+import { Box, Grid, Button, Paper } from "@mui/material";
 import Swal from "sweetalert2";
-import ModalCom from "../../component/modalComp/ModalCom";
-// import AddDataForm from "../addData/AddDataForm";
-import EditFormData from "../salesPage/edit-Customer/EditFormData";
-import {FakeData} from "../../component/FakeData";
-import EditableTable from "../../component/tablecomp/EditableTable";
-import Pagination from "../../component/pagination/Pagination";
+import ModalCom from "../../../../component/modalComp/ModalCom";
+import AddBranchsDetail from "../../add-Customer/addBranchsDetail/AddBranchsDetail";
+import { FakeCustomerData } from "../../../../component/FakeData";
+import EditableTable from "../../../../component/tablecomp/EditableTable";
+import Pagination from "../../../../component/pagination/Pagination";
+import EditCustomerBasic from "../../edit-Customer/editCustomerBasic/EditCustomerBasic";
+import SearchBar from "../../../../component/searchComp/SearchBar"; // ✅ new import
 
-const Home = () => {
+const CustomerBasic = () => {
   const [dataList, setDataList] = useState([]);
+  const [filteredData, setFilteredData] = useState([]); // ✅ for search
+  const [searchQuery, setSearchQuery] = useState("");
+
   const [selectedData, setSelectedData] = useState(null);
 
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [isViewModalOpen, setIsViewModalOpen] = useState(false);
 
-  // Edit tracking (for inline editing — optional)
   const [editRowId, setEditRowId] = useState(null);
   const [editedData, setEditedData] = useState({});
-  const editableFields = []; // Not using inline edit now, handled via modal
+  const editableFields = [];
 
-  // Sorting
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
+  const [currentPage, setCurrentPage] = useState(1);
+  const rowsPerPage = 5;
+
+  useEffect(() => {
+    setDataList(FakeCustomerData);
+    setFilteredData(FakeCustomerData);
+  }, []);
+
+  // ✅ Filter logic (search)
+  useEffect(() => {
+    if (!searchQuery) {
+      setFilteredData(dataList);
+    } else {
+      const lowerQuery = searchQuery.toLowerCase();
+      const filtered = dataList.filter((item) =>
+        Object.values(item).some(
+          (val) =>
+            typeof val === "string" &&
+            val.toLowerCase().includes(lowerQuery)
+        )
+      );
+      setFilteredData(filtered);
+    }
+  }, [searchQuery, dataList]);
 
   const onSort = (key) => {
     let direction = "asc";
@@ -31,33 +56,22 @@ const Home = () => {
     }
     setSortConfig({ key, direction });
 
-    const sortedData = [...dataList].sort((a, b) => {
+    const sortedData = [...filteredData].sort((a, b) => {
       if (a[key] < b[key]) return direction === "asc" ? -1 : 1;
       if (a[key] > b[key]) return direction === "asc" ? 1 : -1;
       return 0;
     });
-
-    setDataList(sortedData);
+    setFilteredData(sortedData);
   };
 
-  // Pagination
-  const [currentPage, setCurrentPage] = useState(1);
-  const rowsPerPage = 5;
-
-  useEffect(() => {
-    setDataList(FakeData);
-  }, []);
-
-  const totalPages = Math.ceil(dataList.length / rowsPerPage);
-  const paginatedData = dataList.slice(
+  const totalPages = Math.ceil(filteredData.length / rowsPerPage);
+  const paginatedData = filteredData.slice(
     (currentPage - 1) * rowsPerPage,
     currentPage * rowsPerPage
   );
 
-  // Modal handlers
   const openAddModal = () => setIsAddModalOpen(true);
   const closeAddModal = () => setIsAddModalOpen(false);
-
   const openEditModal = (id) => {
     const row = dataList.find((item) => item.id === id);
     setSelectedData(row);
@@ -68,17 +82,6 @@ const Home = () => {
     setIsEditModalOpen(false);
   };
 
-  const openViewModal = (id) => {
-    const row = dataList.find((item) => item.id === id);
-    setSelectedData(row);
-    setIsViewModalOpen(true);
-  };
-  const closeViewModal = () => {
-    setSelectedData(null);
-    setIsViewModalOpen(false);
-  };
-
-  // Delete
   const handleDelete = (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -96,38 +99,35 @@ const Home = () => {
     });
   };
 
-  // Table header keys
-  const headers = dataList.length > 0 ? Object.keys(dataList[0]) : [];
-
-  // Table handlers
-  const handleEdit = (id) => openEditModal(id);
-  const handleSave = () => {};
-  const handleCancel = () => {};
-  const handleChange = () => {};
-  const handleLog = (id) => openViewModal(id);
+  const headers = filteredData.length > 0 ? Object.keys(filteredData[0]) : [];
 
   return (
     <Box p={2}>
+      {/* ✅ SearchBar Centered */}
+      <SearchBar
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+        placeholder="Search customer by name, city, or email..."
+      />
+
       {/* Header */}
-      <Grid container justifyContent="space-between" alignItems="center" mb={2}>
-        <Typography variant="h6" fontWeight="bold">
-          Account Master
-        </Typography>
-        {/* <Button
+      <Grid container justifyContent="end" alignItems="center" mb={2}>
+        <Button
           variant="contained"
           size="small"
           sx={{
             textTransform: "capitalize",
-            backgroundColor: "#primary.main",
-            "&:hover": { backgroundColor: "primary.main" },
+            backgroundColor: "#1976d2",
+            "&:hover": { backgroundColor: "#125ea2" },
           }}
           onClick={openAddModal}
         >
-          Add Data
-        </Button> */}
+          Add Customer
+        </Button>
       </Grid>
 
-     <Grid style={{ width: "100%", overflowX: "auto" }}>
+      {/* Table */}
+      <Grid style={{ width: "100%", overflowX: "auto" }}>
         <Paper
           sx={{
             mb: 2,
@@ -142,19 +142,15 @@ const Home = () => {
             rows={paginatedData}
             editRowId={editRowId}
             editedData={editedData}
-            handleEdit={handleEdit}
-            handleSave={handleSave}
-            handleCancel={handleCancel}
-            handleChange={handleChange}
-            editableFields={editableFields}
+            handleEdit={openEditModal}
             handleDelete={handleDelete}
+            editableFields={editableFields}
             sortConfig={sortConfig}
             onSort={onSort}
           />
         </Paper>
       </Grid>
 
-      {/* Pagination */}
       <Pagination
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
@@ -162,20 +158,20 @@ const Home = () => {
       />
 
       {/* Add Modal */}
-      {/* <ModalCom
+      <ModalCom
         isOpen={isAddModalOpen}
         onClose={closeAddModal}
-        title="Add Data"
-        content={<AddDataForm dataList={dataList} setDataList={setDataList} />}
-      /> */}
+        title="Add Customer"
+        content={<AddBranchsDetail dataList={dataList} setDataList={setDataList} />}
+      />
 
       {/* Edit Modal */}
       <ModalCom
         isOpen={isEditModalOpen}
         onClose={closeEditModal}
-        title="Edit Data"
+        title="Update Customer"
         content={
-          <EditFormData
+          <EditCustomerBasic
             selectedData={selectedData}
             dataList={dataList}
             setDataList={setDataList}
@@ -183,9 +179,8 @@ const Home = () => {
           />
         }
       />
-
     </Box>
   );
 };
 
-export default Home;
+export default CustomerBasic;

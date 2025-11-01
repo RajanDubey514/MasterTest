@@ -10,6 +10,7 @@ import {
   Tooltip,
   useMediaQuery,
   Toolbar,
+  Typography,
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { Link, useLocation } from "react-router-dom";
@@ -122,7 +123,7 @@ const ResponsiveDrawer = ({
                     to={path}
                     selected={location.pathname === path}
                     sx={{
-                      minHeight: 44,
+                      minHeight: 40,
                       justifyContent: open ? "initial" : "center",
                       px: 2.5,
                       "&.Mui-selected": {
@@ -135,20 +136,23 @@ const ResponsiveDrawer = ({
                   >
                     <ListItemIcon
                       sx={{
-                        minWidth: 0,
+                         minWidth: 0,
                         mr: open ? 3 : "auto",
                         justifyContent: "center",
                       }}
                     >
                       {icon}
                     </ListItemIcon>
-                    <ListItemText
+                    {/* <ListItemText
                       primary={text}
                       sx={{
                         opacity: open ? 1 : 0,
-                        fontSize: "0.9rem",
+                        fontSize: "0.5rem",
                       }}
-                    />
+                    /> */}
+                    <Typography variant="p" sx={{fontSize : "14px"}}>
+                      {text}
+                    </Typography>
                   </ListItemButton>
                 </Tooltip>
               </ListItem>

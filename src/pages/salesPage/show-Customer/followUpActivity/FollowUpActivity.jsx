@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Box, Grid, Typography, Button, Paper } from "@mui/material";
 import Swal from "sweetalert2";
-import ModalCom from "../../component/modalComp/ModalCom";
-// import AddDataForm from "../addData/AddDataForm";
-import EditFormData from "../salesPage/edit-Customer/EditFormData";
-import {FakeData} from "../../component/FakeData";
-import EditableTable from "../../component/tablecomp/EditableTable";
-import Pagination from "../../component/pagination/Pagination";
+import ModalCom from "../../../../component/modalComp/ModalCom";
+import AddFollowUpActivity from "../../add-Customer/AddFollowUpActivity/AddFollowUpActivity"
+import EditFormData from "../../../salesPage/edit-Customer/EditFormData";
+import {FakeFollowUpActivityData} from "../../../../component/FakeData";
+import EditableTable from "../../../../component/tablecomp/EditableTable";
+import Pagination from "../../../../component/pagination/Pagination";
+import EditFollowUpActivity from "../../edit-Customer/editFollowUpActivity/EditFollowUpActivity";
 
-const Home = () => {
+const FollowUpActivity = () => {
   const [dataList, setDataList] = useState([]);
   const [selectedData, setSelectedData] = useState(null);
 
@@ -45,7 +46,7 @@ const Home = () => {
   const rowsPerPage = 5;
 
   useEffect(() => {
-    setDataList(FakeData);
+    setDataList(FakeFollowUpActivityData);
   }, []);
 
   const totalPages = Math.ceil(dataList.length / rowsPerPage);
@@ -73,10 +74,10 @@ const Home = () => {
     setSelectedData(row);
     setIsViewModalOpen(true);
   };
-  const closeViewModal = () => {
-    setSelectedData(null);
-    setIsViewModalOpen(false);
-  };
+  // const closeViewModal = () => {
+  //   setSelectedData(null);
+  //   setIsViewModalOpen(false);
+  // };
 
   // Delete
   const handleDelete = (id) => {
@@ -104,16 +105,13 @@ const Home = () => {
   const handleSave = () => {};
   const handleCancel = () => {};
   const handleChange = () => {};
-  const handleLog = (id) => openViewModal(id);
+  // const handleLog = (id) => openViewModal(id);
 
   return (
     <Box p={2}>
       {/* Header */}
-      <Grid container justifyContent="space-between" alignItems="center" mb={2}>
-        <Typography variant="h6" fontWeight="bold">
-          Account Master
-        </Typography>
-        {/* <Button
+      <Grid container justifyContent="end" alignItems="center" mb={2}>
+        <Button
           variant="contained"
           size="small"
           sx={{
@@ -123,8 +121,8 @@ const Home = () => {
           }}
           onClick={openAddModal}
         >
-          Add Data
-        </Button> */}
+          Add Follow Up Activity
+        </Button>
       </Grid>
 
      <Grid style={{ width: "100%", overflowX: "auto" }}>
@@ -162,12 +160,12 @@ const Home = () => {
       />
 
       {/* Add Modal */}
-      {/* <ModalCom
+      <ModalCom
         isOpen={isAddModalOpen}
         onClose={closeAddModal}
-        title="Add Data"
-        content={<AddDataForm dataList={dataList} setDataList={setDataList} />}
-      /> */}
+        title="Add Follow Up Activity"
+        content={<AddFollowUpActivity dataList={dataList} setDataList={setDataList} />}
+      />
 
       {/* Edit Modal */}
       <ModalCom
@@ -175,7 +173,7 @@ const Home = () => {
         onClose={closeEditModal}
         title="Edit Data"
         content={
-          <EditFormData
+          <EditFollowUpActivity
             selectedData={selectedData}
             dataList={dataList}
             setDataList={setDataList}
@@ -188,4 +186,5 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default FollowUpActivity;
+

@@ -17,9 +17,10 @@ const style = {
   bgcolor: "background.paper",
   borderRadius: 3,
   boxShadow: 24,
-  p: 3,
-  maxHeight: "80vh",
-  overflowY: "auto",
+  p: 2,
+  maxHeight: "90vh", // ensures modal fits in viewport
+  width : "75%",
+  overflow: "hidden", // hides scrollbars completely
 };
 
 const ModalCom = ({ isOpen, onClose, title, content }) => {
@@ -44,24 +45,29 @@ const ModalCom = ({ isOpen, onClose, title, content }) => {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            mb: 1,
+            mb: 0,
           }}
         >
-          <Typography id="modal-title" variant="" component="p" sx={{fontSize : "17px" }}>
+          <Typography
+            id="modal-title"
+            sx={{ fontSize: "17px", fontWeight: 600 }}
+          >
             {title || ""}
           </Typography>
-          <IconButton onClick={onClose} size="small" sx={{color : "red"}}>
+          <IconButton onClick={onClose} size="small" sx={{ color: "red" }}>
             <CloseIcon />
           </IconButton>
         </Box>
 
+        <Divider sx={{ mb: 2 }} />
 
         {/* Body */}
-        <Box id="modal-content">{content || <Typography>No content available</Typography>}</Box>
+        <Box id="modal-content" sx={{ overflow: "hidden" }}>
+          {content || <Typography>No content available</Typography>}
+        </Box>
       </Box>
     </Modal>
   );
 };
 
 export default ModalCom;
-

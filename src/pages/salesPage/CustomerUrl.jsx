@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Box, Button, Grid } from "@mui/material";
-import CustomerBasic from "./customerBasic/CustomerBasic";
-import BranchsDetail from "./branchsDetail/BranchsDetail";
-import IntrestedProduct from "./intrestedProduct/IntrestedProduct";
-import FollowUpActivity from "./followUpActivity/FollowUpActivity";
+import CustomerBasic from "./show-Customer/customerBasic/CustomerBasic";
+import BranchsDetail from "./show-Customer/branchsDetail/BranchsDetail";
+import IntrestedProduct from "./show-Customer/intrestedProduct/IntrestedProduct";
+import FollowUpActivity from "./show-Customer/followUpActivity/FollowUpActivity";
 
 // ✅ Component Mapping
 const componentsMap = {
