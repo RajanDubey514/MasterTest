@@ -102,9 +102,9 @@ const EdiitBranchsDetail = ({
       }}
     >
       {/* ✅ Scrollable Form */}
-      <Box sx={{ flex: 1, overflowY: "auto", p: 3 }}>
+      <Box sx={{ flex: 1, overflowY: "auto", p: 1 }}>
         <form onSubmit={formik.handleSubmit} id="branchForm">
-          <Grid container spacing={2} sx={{ px: 4 }}>
+          <Grid container spacing={2} sx={{  }}>
             {/* ✅ Text Fields */}
             {[
               { label: "Branch Name", name: "branchName", required: true },

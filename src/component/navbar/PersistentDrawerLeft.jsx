@@ -267,7 +267,7 @@ export default function PersistentMiniDrawer({ children }) {
         <DrawerHeader />
 
         {/* Scrollable content */}
-        <Box sx={{ flexGrow: 1, overflowY: "auto", p: 1, mb: "60px" }}>
+        <Box sx={{ flexGrow: 1, overflowY: "auto", p: 1, mb: "90px" }}>
           {children}
         </Box>
 

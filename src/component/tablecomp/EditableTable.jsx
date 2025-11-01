@@ -39,15 +39,18 @@ const EditableTable = ({
 }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const isTablet = useMediaQuery(theme.breakpoints.between("sm", "md"));
 
-  // Sort icon helper
+  // Helper for icon size based on screen
+  const iconSize = isMobile ? 14 : isTablet ? 15 : 16;
+
   const getSortIcon = (header) => {
     if (!sortConfig || sortConfig.key !== header)
-      return <ChevronDown size={14} className="ml-1 text-gray-300" />;
+      return <ChevronDown size={iconSize} className="ml-1 text-gray-300" />;
     return sortConfig.direction === "asc" ? (
-      <ChevronUp size={14} className="ml-1 text-white" />
+      <ChevronUp size={iconSize} className="ml-1 text-white" />
     ) : (
-      <ChevronDown size={14} className="ml-1 text-white" />
+      <ChevronDown size={iconSize} className="ml-1 text-white" />
     );
   };
 
@@ -58,7 +61,7 @@ const EditableTable = ({
         overflow: "hidden",
         borderRadius: 2,
         boxShadow: "0px 4px 15px rgba(0,0,0,0.12)",
-        p: 1,
+        p: { xs: 0.5, sm: 1, md: 1.5 },
       }}
     >
       <TableContainer
@@ -78,14 +81,21 @@ const EditableTable = ({
           size="small"
           sx={{
             "& .MuiTableCell-root": {
-              padding: "4px 6px",
-              fontSize: "0.75rem",
-              lineHeight: 1.2,
+              padding: { xs: "3px 4px", },
+              fontSize: {
+                xs: "0.6rem",
+                sm: "0.7rem",
+                md: "0.8rem",
+              },
+              lineHeight: 1.3,
             },
             "& .MuiTableCell-head": {
-              padding: "6px 8px",
               fontWeight: 600,
-              fontSize: "0.75rem",
+              fontSize: {
+                xs: "0.65rem",
+                sm: "0.75rem",
+                md: "0.85rem",
+              },
               textTransform: "uppercase",
             },
           }}
@@ -109,7 +119,7 @@ const EditableTable = ({
                       zIndex: isId || isAction ? 20 : 10,
                       cursor: "pointer",
                       whiteSpace: "nowrap",
-                      minWidth: isId || isAction ? 80 : 150,
+                      minWidth: isId || isAction ? 70 : { xs: 100, sm: 130, md: 150 },
                       borderRight: "1px solid rgba(224,224,224,0.6)",
                       backgroundColor:
                         isId || isAction ? "#1b7bdbff" : "#7aadf4ff",
@@ -138,7 +148,7 @@ const EditableTable = ({
                     position: "sticky",
                     right: 0,
                     zIndex: 20,
-                    minWidth: 80,
+                    minWidth: { xs: 70, sm: 80, md: 90 },
                     whiteSpace: "nowrap",
                     backgroundColor: "#1976d2",
                     color: "white",
@@ -174,7 +184,7 @@ const EditableTable = ({
                         backgroundColor: isId ? "#f3f6fb" : "white",
                         zIndex: isId ? 10 : "auto",
                         whiteSpace: "nowrap",
-                        minWidth: isId ? 60 : 150,
+                        minWidth: isId ? 50 : { xs: 100, sm: 130, md: 150 },
                         borderRight: "1px solid rgba(224,224,224,0.4)",
                       }}
                     >
@@ -187,16 +197,16 @@ const EditableTable = ({
                           onKeyUp={(e) => e.key === "Enter" && handleSave()}
                           style={{
                             width: "100%",
-                            padding: "3px 4px",
+                            padding: isMobile ? "2px 3px" : "3px 5px",
                             border: "1px solid #ccc",
                             borderRadius: 3,
-                            fontSize: "0.7rem",
+                            fontSize: isMobile ? "0.6rem" : "0.75rem",
                           }}
                         />
                       ) : row[header] === true ? (
-                        <Check size={14} color="green" />
+                        <Check size={iconSize} color="green" />
                       ) : row[header] === false ? (
-                        <X size={14} color="red" />
+                        <X size={iconSize} color="red" />
                       ) : (
                         String(row[header])
                       )}
@@ -213,7 +223,7 @@ const EditableTable = ({
                       backgroundColor: "#fff",
                       zIndex: 15,
                       whiteSpace: "nowrap",
-                      minWidth: 80,
+                      minWidth: { xs: 70, sm: 80, md: 90 },
                       borderLeft: "1px solid rgba(224,224,224,0.4)",
                     }}
                   >
@@ -222,16 +232,16 @@ const EditableTable = ({
                         <IconButton
                           color="success"
                           onClick={handleSave}
-                          size="small"
+                          size={isMobile ? "small" : "medium"}
                         >
-                          <Save size={14} />
+                          <Save size={iconSize} />
                         </IconButton>
                         <IconButton
                           color="error"
                           onClick={handleCancel}
-                          size="small"
+                          size={isMobile ? "small" : "medium"}
                         >
-                          <X size={14} />
+                          <X size={iconSize} />
                         </IconButton>
                       </>
                     ) : (
@@ -240,17 +250,17 @@ const EditableTable = ({
                           <IconButton
                             color="primary"
                             onClick={() => handleEdit(row.id)}
-                            size="small"
+                            size={isMobile ? "small" : "medium"}
                           >
-                            <Edit size={14} />
+                            <Edit size={iconSize} />
                           </IconButton>
                         )}
                         <IconButton
                           color="error"
                           onClick={() => handleDelete(row.id)}
-                          size="small"
+                          size={isMobile ? "small" : "medium"}
                         >
-                          <Trash2 size={14} />
+                          <Trash2 size={iconSize} />
                         </IconButton>
                       </>
                     )}

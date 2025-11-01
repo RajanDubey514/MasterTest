@@ -97,9 +97,9 @@ const EditCustomerBasic = ({
       }}
     >
       {/* ✅ Scrollable Form Area */}
-      <Box sx={{ flex: 1, overflowY: "auto", p: 3 }}>
+      <Box sx={{ flex: 1, overflowY: "auto", p: 1 }}>
         <form onSubmit={formik.handleSubmit} id="editCustomerForm">
-          <Grid container spacing={2} sx={{ px: 4 }}>
+          <Grid container spacing={2} sx={{  }}>
             {/* ✅ TEXT FIELDS */}
             {[
               { label: "Customer Name", name: "customerName", required: true },

@@ -70,12 +70,11 @@ const AddBranchsDetail = ({ dataList, setDataList }) => {
   return (
     <Box
       sx={{
-        backgroundColor: "#f5f8ff",
+         backgroundColor: "#f3f4f6",
         borderRadius: 2,
         display: "flex",
         flexDirection: "column",
-        height: 480, // Fixed height for modal
-        overflow: "hidden",
+        height: "75vh",
       }}
     >
       {/* ✅ Scrollable Form Section */}

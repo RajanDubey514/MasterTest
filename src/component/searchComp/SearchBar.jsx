@@ -9,8 +9,9 @@ const SearchBar = ({ searchQuery, setSearchQuery, placeholder = "Search..." }) =
       sx={{
         display: "flex",
         justifyContent: "center",
-        mb: 1,
+        mb: { xs: 1, sm: 2 },
         width: "100%",
+        px: { xs: 1, sm: 0 },
       }}
     >
       <TextField
@@ -20,7 +21,12 @@ const SearchBar = ({ searchQuery, setSearchQuery, placeholder = "Search..." }) =
         onChange={(e) => setSearchQuery(e.target.value)}
         placeholder={placeholder}
         sx={{
-          width: { xs: "100%", sm: 250, md: 350 },
+          width: {
+            xs: "100%", // full width on mobile
+            sm: 250,
+            md: 350,
+            lg: 400,
+          },
           backgroundColor: "#fff",
           borderRadius: 2,
           boxShadow: "0 2px 6px rgba(0,0,0,0.08)",
@@ -30,17 +36,49 @@ const SearchBar = ({ searchQuery, setSearchQuery, placeholder = "Search..." }) =
               borderColor: "primary.main",
             },
           },
+          "& .MuiInputBase-input": {
+            fontWeight: 500,
+            fontSize: {
+              xs: "0.6rem", // Mobile
+              sm: "0.7rem", // Tablet
+              md: "0.85rem", // Desktop
+            },
+            py: { xs: 0.8, sm: 1 }, // Adjust vertical padding
+          },
         }}
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
-              <SearchIcon color="primary" />
+              <SearchIcon
+                color="primary"
+                sx={{
+                  fontSize: {
+                    xs: "1rem", // Mobile
+                    sm: "1.2rem", // Tablet
+                    md: "1.4rem", // Desktop
+                  },
+                }}
+              />
             </InputAdornment>
           ),
           endAdornment: searchQuery ? (
             <InputAdornment position="end">
-              <IconButton size="small" onClick={() => setSearchQuery("")}>
-                <ClearIcon fontSize="small" />
+              <IconButton
+                size="small"
+                onClick={() => setSearchQuery("")}
+                sx={{
+                  p: { xs: 0.3, sm: 0.4, md: 0.5 },
+                }}
+              >
+                <ClearIcon
+                  sx={{
+                    fontSize: {
+                      xs: "1rem",
+                      sm: "1.2rem",
+                      md: "1.3rem",
+                    },
+                  }}
+                />
               </IconButton>
             </InputAdornment>
           ) : null,

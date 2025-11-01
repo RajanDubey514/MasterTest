@@ -168,13 +168,23 @@ const IntrestedProduct = () => {
       ============================================================== */}
       <Grid container justifyContent="end" alignItems="center" mb={2}>
         <Button
-          variant="contained"
+         variant="contained"
           size="small"
           sx={{
-            textTransform: "capitalize",
-            backgroundColor: "#1976d2",
-            "&:hover": { backgroundColor: "#125ea2" },
-          }}
+    textTransform: "capitalize",
+    fontWeight: 600,
+    fontSize: {
+      xs: "0.6rem",  // Mobile
+      sm: "0.7rem",  // Tablet
+      md: "0.85rem", // Desktop
+    },
+    borderRadius: "8px",
+    backgroundColor: "#1976d2",
+    "&:hover": {
+      backgroundColor: "#125ea2",
+    },
+    transition: "all 0.2s ease-in-out",
+  }}
           onClick={openAddModal}
         >
           Add Interested Product

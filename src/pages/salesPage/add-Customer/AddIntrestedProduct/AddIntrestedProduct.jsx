@@ -97,7 +97,7 @@ const AddIntrestedProduct = ({ dataList, setDataList }) => {
         }}
       >
         <form onSubmit={formik.handleSubmit} id="addInterestedProductForm">
-          <Grid container spacing={2} sx={{ px: 4 }}>
+          <Grid container spacing={2} sx={{  }}>
             {/* ✅ Text Fields */}
             {[
               { label: "Product Name", name: "productName", required: true },

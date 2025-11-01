@@ -98,11 +98,11 @@ const EditFollowUpActivity = ({
         sx={{
           flex: 1,
           overflowY: "auto",
-          p: 3,
+          p: 1,
         }}
       >
         <form onSubmit={formik.handleSubmit} id="editFollowUpForm">
-          <Grid container spacing={2} sx={{ px: 8 }}>
+          <Grid container spacing={2} sx={{}}>
             {/* ✅ Input Fields */}
             {[
               { label: "Due Date/Time", name: "dueDateTime", required: true },
